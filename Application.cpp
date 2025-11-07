@@ -5,12 +5,14 @@
 #include "classes/Othello.h"
 #include "classes/Connect4.h"
 #include "classes/Chess.h"
+#include "classes/Logger.h"
 
 namespace ClassGame {
         //
         // our global variables
         //
         Game *game = nullptr;
+        Logger &logger = Logger::GetInstance();
         bool gameOver = false;
         int gameWinner = -1;
 
@@ -21,6 +23,7 @@ namespace ClassGame {
         void GameStartUp() 
         {
             game = nullptr;
+            logger.Event("Game started!");
         }
 
         //
@@ -31,7 +34,15 @@ namespace ClassGame {
         {
                 ImGui::DockSpaceOverViewport();
 
-                //ImGui::ShowDemoWindow();
+                // Debug window
+                ImGui::SetNextWindowSize(ImVec2(600, 400), ImGuiCond_FirstUseEver);
+                ImGui::Begin("Debug Log");
+                if (ImGui::Button("Save")) logger.ToFile();
+                ImGui::SameLine();
+                if (ImGui::Button("Clear")) logger.Clear();
+                // Draw all log messages
+                logger.Draw("Debug Log");
+                ImGui::End();
 
                 ImGui::Begin("Settings");
 
