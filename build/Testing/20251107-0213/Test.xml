@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="Win32-ninja"
+	BuildStamp="20251107-0213-Experimental"
+	Name="lyleptop"
+	Generator="ctest-4.1.2"
+	CompilerName="C:/Program Files/LLVM/bin/clang++.exe"
+	CompilerVersion="21.1.0"
+	OSName="Windows"
+	Hostname="lyleptop"
+	OSRelease=" Personal"
+	OSVersion=" (Build 26200)"
+	OSPlatform="AMD64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="12"
+	ModelName=""
+	ProcessorCacheSize="-1"
+	NumberOfLogicalCPU="8"
+	NumberOfPhysicalCPU="4"
+	TotalVirtualMemory="25383"
+	TotalPhysicalMemory="16167"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="3110"
+	>
+	<Testing>
+		<StartDateTime>Nov 06 18:17 Pacific Standard Time</StartDateTime>
+		<StartTestTime>1762481860</StartTestTime>
+		<TestList/>
+		<EndDateTime>Nov 06 18:17 Pacific Standard Time</EndDateTime>
+		<EndTestTime>1762481860</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>
