@@ -1,2 +1,2 @@
 # Chess
-![Standard chess board layout](https://imgur.com/a/HS3kSqH "Game Screenshot")
+Screenshot: https://imgur.com/a/ZYYAQA7

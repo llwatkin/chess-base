@@ -49,8 +49,8 @@ void Chess::setUpBoard()
     _gameOptions.rowY = 8;
 
     _grid->initializeChessSquares(pieceSize, "boardsquare.png");
-    FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
-    //FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    //FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+    FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
     startGame();
 }
@@ -68,8 +68,8 @@ void Chess::FENtoBoard(const std::string& fen) {
         char c = fen[i];
         int ascii = (int)c;
         
-        if (x == COLS - 1 && y == ROWS - 1) break; // Ignore the last bit of the string
-  
+        if (c == ' ') break; // Ignore the last bit of the string
+        
         if (c == '/') 
         {
             y++;
