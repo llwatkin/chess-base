@@ -50,6 +50,7 @@ void Chess::setUpBoard()
 
     _grid->initializeChessSquares(pieceSize, "boardsquare.png");
     FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+    //FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
     startGame();
 }
@@ -66,7 +67,9 @@ void Chess::FENtoBoard(const std::string& fen) {
 
         char c = fen[i];
         int ascii = (int)c;
-
+        
+        if (x == COLS - 1 && y == ROWS - 1) break; // Ignore the last bit of the string
+  
         if (c == '/') 
         {
             y++;
@@ -110,7 +113,7 @@ void Chess::FENtoBoard(const std::string& fen) {
             ChessSquare *square = _grid->getSquare(x, y);
             newPiece->setPosition(square->getPosition());
             square->setBit(newPiece);
-            
+
             x++;
         }
     }
