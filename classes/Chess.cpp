@@ -1,10 +1,13 @@
 #include "Chess.h"
+#include "Logger.h"
 #include <limits>
 #include <cmath>
 
+Logger &logger = Logger::GetInstance();
+
 Chess::Chess()
 {
-    _grid = new Grid(8, 8);
+    _grid = new Grid(ROWS, COLS);
 }
 
 Chess::~Chess()
@@ -52,15 +55,65 @@ void Chess::setUpBoard()
 }
 
 void Chess::FENtoBoard(const std::string& fen) {
-    // convert a FEN string to a board
-    // FEN is a space delimited string with 6 fields
-    // 1: piece placement (from white's perspective)
-    // NOT PART OF THIS ASSIGNMENT BUT OTHER THINGS THAT CAN BE IN A FEN STRING
-    // ARE BELOW
-    // 2: active color (W or B)
-    // 3: castling availability (KQkq or -)
-    // 4: en passant target square (in algebraic notation, or -)
-    // 5: halfmove clock (number of halfmoves since the last capture or pawn advance)
+    // Current board position
+    int x = 0;
+    int y = 0;
+
+    for (size_t i = 0; i < fen.length(); i++)
+    {
+        int playerNumber = 0;
+        ChessPiece pieceType = NoPiece;
+
+        char c = fen[i];
+        int ascii = (int)c;
+
+        if (c == '/') 
+        {
+            y++;
+            x = 0;
+        }
+        else if (ascii >= 49 && ascii <= 56) // 1 to 8
+        {
+            int spaces = c -'0';
+            x += spaces;
+        }
+        else if (ascii >= 65 && ascii <= 90) // A to Z
+        {
+            playerNumber = 1;
+            switch (c)
+            {
+                case 'R': pieceType = Rook; break;
+                case 'N': pieceType = Knight; break;
+                case 'B': pieceType = Bishop; break;
+                case 'Q': pieceType = Queen; break;
+                case 'K': pieceType = King; break;
+                case 'P': pieceType = Pawn; break;
+            }
+        }
+        else if (ascii >= 97 && ascii <= 122) // a to z
+        {
+            playerNumber = 0;
+            switch (c)
+            {
+                case 'r': pieceType = Rook; break;
+                case 'n': pieceType = Knight; break;
+                case 'b': pieceType = Bishop; break;
+                case 'q': pieceType = Queen; break;
+                case 'k': pieceType = King; break;
+                case 'p': pieceType = Pawn; break;
+            }
+        }
+
+        if (pieceType != NoPiece) 
+        {
+            Bit *newPiece = PieceForPlayer(playerNumber, pieceType);
+            ChessSquare *square = _grid->getSquare(x, y);
+            newPiece->setPosition(square->getPosition());
+            square->setBit(newPiece);
+            
+            x++;
+        }
+    }
 }
 
 bool Chess::actionForEmptyHolder(BitHolder &holder)

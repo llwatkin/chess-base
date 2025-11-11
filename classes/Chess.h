@@ -40,6 +40,9 @@ public:
     Grid* getGrid() override { return _grid; }
 
 private:
+    const int ROWS = 8;
+    const int COLS = 8;
+
     Bit* PieceForPlayer(const int playerNumber, ChessPiece piece);
     Player* ownerAt(int x, int y) const;
     void FENtoBoard(const std::string& fen);
