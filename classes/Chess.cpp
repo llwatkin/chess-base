@@ -279,7 +279,7 @@ void Chess::generateKingMoves(std::vector<BitMove>& moves, Bitboard kingBoard, u
 }
 
 //
-// Generates all possible moves for a given player (color)
+// Generates all possible moves for a given player
 //
 std::vector<BitMove> Chess::generateMoves(char color)
 {
@@ -289,8 +289,12 @@ std::vector<BitMove> Chess::generateMoves(char color)
 
     uint64_t myKnights = 0LL;
     uint64_t myPawns = 0LL;
+    uint64_t myKing = 0LL;
+    uint64_t myOtherPieces = 0LL;
     uint64_t enemyKnights = 0LL;
     uint64_t enemyPawns = 0LL;
+    uint64_t enemyKing = 0LL;
+    uint64_t enemyOtherPieces = 0LL;
 
     const char *myPieces = (color == WHITE) ? "PNBRQK" : "pnbrqk";
     const char *enemyPieces = (color == WHITE) ? "pnbrqk" : "PNBRQK";
@@ -299,13 +303,22 @@ std::vector<BitMove> Chess::generateMoves(char color)
     {
         if (gameState[i] == myPieces[0]) myPawns |= 1ULL << i;
         else if (gameState[i] == myPieces[1]) myKnights |= 1ULL << i;
+        else if (gameState[i] == myPieces[2]) myOtherPieces |= 1ULL << i;
+        else if (gameState[i] == myPieces[3]) myOtherPieces |= 1ULL << i;
+        else if (gameState[i] == myPieces[4]) myOtherPieces |= 1ULL << i;
+        else if (gameState[i] == myPieces[5]) myKing |= 1ULL << i;
         else if (gameState[i] == enemyPieces[0]) enemyPawns |= 1ULL << i;
         else if (gameState[i] == enemyPieces[1]) enemyKnights |= 1ULL << i;
+        else if (gameState[i] == enemyPieces[2]) enemyOtherPieces |= 1ULL << i;
+        else if (gameState[i] == enemyPieces[3]) enemyOtherPieces |= 1ULL << i;
+        else if (gameState[i] == enemyPieces[4]) enemyOtherPieces |= 1ULL << i;
+        else if (gameState[i] == enemyPieces[5]) enemyKing |= 1ULL << i;
     }
 
-    uint64_t occupiedByMe = myKnights | myPawns;
-    uint64_t occupiedByEnemy = enemyKnights | enemyPawns;
+    uint64_t occupiedByMe = myKnights | myPawns | myKing | myOtherPieces;
+    uint64_t occupiedByEnemy = enemyKnights | enemyPawns | enemyKing | enemyOtherPieces;
     generateKnightMoves(moves, myKnights, ~occupiedByMe);
+    generateKingMoves(moves, myKing, ~occupiedByMe);
     generatePawnMoves(moves, myPawns, occupiedByEnemy, ~occupiedByMe, color);
 
     logger.Info("There are " + std::to_string(moves.size()) + " moves available for Player " + std::to_string(color));
