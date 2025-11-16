@@ -319,7 +319,7 @@ std::vector<BitMove> Chess::generateMoves(char color)
     uint64_t occupiedByEnemy = enemyKnights | enemyPawns | enemyKing | enemyOtherPieces;
     generateKnightMoves(moves, myKnights, ~occupiedByMe);
     generateKingMoves(moves, myKing, ~occupiedByMe);
-    generatePawnMoves(moves, myPawns, occupiedByEnemy, ~occupiedByMe, color);
+    generatePawnMoves(moves, myPawns, occupiedByEnemy, ~occupiedByMe & ~occupiedByEnemy, color);
 
     logger.Info("There are " + std::to_string(moves.size()) + " moves available for Player " + std::to_string(color));
     return moves;
@@ -364,12 +364,6 @@ bool Chess::canBitMoveFromTo(Bit &bit, BitHolder &src, BitHolder &dst)
     int dstIndex = dstSquare->getSquareIndex();
 
     for (auto const & move : _moves) if (move.from == srcIndex && move.to == dstIndex) return true;
-    _grid->forEachSquare(
-        [](ChessSquare* square, int x, int y) 
-        {
-            square->setHighlighted(false);
-        }
-    );
     return false;
 }
 

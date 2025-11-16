@@ -13,14 +13,10 @@ void ChessSquare::initHolder(const ImVec2 &position, const char *spriteName, con
 
 bool ChessSquare::canDropBitAtPoint(Bit *newbit, const ImVec2 &point)
 {
-    if (bit() == nullptr)
-    {
-        return true;
-    }
-    //
-    // xor the gametags to see if we have opposing colors
-    //
-    if ((bit()->gameTag() ^ newbit->gameTag()) >= 128)
+    if (bit() == nullptr) return true;
+
+    // if opposing colors, we may capture
+    if (bit()->getOwner() != newbit->getOwner())
     {
         return true;
     }
@@ -37,7 +33,7 @@ bool ChessSquare::dropBitAtPoint(Bit *newbit, const ImVec2 &point)
         return true;
     }
     // we're taking a piece!
-    if ((bit()->gameTag() ^ newbit->gameTag()) >= 128)
+    if (bit()->getOwner() != newbit->getOwner())
     {
         setBit(newbit);
         newbit->setParent(this);
