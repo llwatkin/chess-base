@@ -50,10 +50,7 @@ void BitHolder::destroyBit()
 
 Bit *BitHolder::canDragBit(Bit *bit)
 {
-	if (bit->getParent() == this && bit->friendly())
-	{
-		return bit;
-	}
+	if (bit->getParent() == this) return bit;
 	return nullptr;
 }
 

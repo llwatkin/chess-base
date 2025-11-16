@@ -61,14 +61,6 @@ namespace ClassGame {
                         game = new TicTacToe();
                         game->setUpBoard();
                     }
-                    if (ImGui::Button("Start Checkers")) {
-                        game = new Checkers();
-                        game->setUpBoard();
-                    }
-                    if (ImGui::Button("Start Othello")) {
-                        game = new Othello();
-                        game->setUpBoard();
-                    }
                     if (ImGui::Button("Start Connect 4")) {
                         game = new Connect4();
                         game->setUpBoard();

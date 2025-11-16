@@ -16,12 +16,12 @@ enum ChessPiece
     King
 };
 
-class BitboardElement {
+class Bitboard {
   public:
     // Constructors
-    BitboardElement()
+    Bitboard()
         : _data(0) { }
-    BitboardElement(uint64_t data)
+    Bitboard(uint64_t data)
         : _data(data) { }
 
     // Getters and Setters
@@ -41,7 +41,7 @@ class BitboardElement {
         }
     }
 
-    BitboardElement& operator|=(const uint64_t other) {
+    Bitboard& operator|=(const uint64_t other) {
         _data |= other;
         return *this;
     }
@@ -68,14 +68,15 @@ class BitboardElement {
 private:
     uint64_t    _data;
 
+    // Finds index of the least significant set bit
     inline int bitScanForward(uint64_t bb) const {
-#if defined(_MSC_VER) && !defined(__clang__)
-        unsigned long index;
-        _BitScanForward64(&index, bb);
-        return index;
-#else
-        return __builtin_ffsll(bb) - 1;
-#endif
+        #if defined(_MSC_VER) && !defined(__clang__)
+            unsigned long index;
+            _BitScanForward64(&index, bb);
+            return index;
+        #else
+                return __builtin_ffsll(bb) - 1;
+        #endif
     };
 
 };

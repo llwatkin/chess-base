@@ -43,8 +43,7 @@ public:
 	Player *getOwner();
 	void setOwner(Player *player) { _owner = player; };
 	// helper functions
-	bool friendly();
-	bool unfriendly();
+	bool isFriendly(Player *player);
 	// game defined game tags
 	const int gameTag() const { return _gameTag; };
 	void setGameTag(int tag) { _gameTag = tag; };

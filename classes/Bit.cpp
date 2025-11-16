@@ -56,14 +56,10 @@ void Bit::setPickedUp(bool up)
 	}
 }
 
-bool Bit::friendly()
+bool Bit::isFriendly(Player *player)
 {
-	return true;
-}
-
-bool Bit::unfriendly()
-{
-	return !friendly();
+	if (player == getOwner()) return true;
+	return false;
 }
 
 bool Bit::getPickedUp()

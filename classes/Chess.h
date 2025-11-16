@@ -3,18 +3,10 @@
 #include "Game.h"
 #include "Grid.h"
 
-constexpr int pieceSize = 80;
+#define WHITE 0
+#define BLACK 1
 
-enum ChessPiece
-{
-    NoPiece,
-    Pawn,
-    Knight,
-    Bishop,
-    Rook,
-    Queen,
-    King
-};
+constexpr int pieceSize = 80;
 
 class Chess : public Game
 {
@@ -40,13 +32,23 @@ public:
     Grid* getGrid() override { return _grid; }
 
 private:
-    const int ROWS = 8;
-    const int COLS = 8;
-
     Bit* PieceForPlayer(const int playerNumber, ChessPiece piece);
     Player* ownerAt(int x, int y) const;
     void FENtoBoard(const std::string& fen);
     char pieceNotation(int x, int y) const;
 
+    // Generating bitboards and moves
+    Bitboard generateKnightMoveBitboard(int square);
+    Bitboard generateKingMoveBitboard(int square);
+    void addPawnBitboardMovesToList(std::vector<BitMove>& moves, const Bitboard bitboard, const int shift);
+    void generatePawnMoves(std::vector<BitMove>& moves, Bitboard pawnBoard, Bitboard enemyPieces, Bitboard emptySquares, char color);
+    void generateKnightMoves(std::vector<BitMove>& moves, Bitboard knightBoard, uint64_t emptySquares);
+    void generateKingMoves(std::vector<BitMove>& moves, Bitboard kingBoard, uint64_t emptySquares);
+    std::vector<BitMove> generateMoves(char color);
+
     Grid* _grid;
+    Bitboard _knightBitboards[64];
+    Bitboard _kingBitboards[64];
+
+    std::vector<BitMove> _moves;
 };
