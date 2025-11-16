@@ -10,7 +10,7 @@
 60	4435	7844481667336043	CMakeFiles/demo.dir/classes/Grid.cpp.obj	7bd4033162f19d43
 39	6980	7841850519053906	CMakeFiles/demo.dir/imgui/imgui.cpp.obj	291cc0914e51e2b8
 66	6432	7844481667487262	CMakeFiles/demo.dir/classes/TicTacToe.cpp.obj	514fc23222757cea
-11	2078	7845371976649695	CMakeFiles/demo.dir/Application.cpp.obj	efd0779db84ab9b
+11	5442	7848590389074392	CMakeFiles/demo.dir/Application.cpp.obj	efd0779db84ab9b
 73	6398	7844481667557467	CMakeFiles/demo.dir/classes/Checkers.cpp.obj	446848ee49b1e566
 85	6355	7844481667681079	CMakeFiles/demo.dir/classes/Connect4.cpp.obj	2dd373b72087024c
 79	6470	7844481667609322	CMakeFiles/demo.dir/classes/Othello.cpp.obj	54c43b01db3bf123
@@ -20,7 +20,14 @@
 7488	8393	7841850593543883	CMakeFiles/demo.dir/imgui/imgui_impl_win32.cpp.obj	88a7778c382c1d16
 6981	8421	7841850588475587	CMakeFiles/demo.dir/main_win32.cpp.obj	d03444e0a427dc11
 65	8491	7841850519316207	CMakeFiles/demo.dir/classes/Sprite.cpp.obj	d6314272b4de7250
-1704	2021	7845466808537478	demo.exe	b3373267687d148
-38	1898	7841853048869113	CMakeFiles/demo.dir/classes/Logger.cpp.obj	f7e37533f22fcac8
-11	5442	7848590389074392	CMakeFiles/demo.dir/Application.cpp.obj	efd0779db84ab9b
 5444	6043	7848590443464839	demo.exe	b3373267687d148
+38	1898	7841853048869113	CMakeFiles/demo.dir/classes/Logger.cpp.obj	f7e37533f22fcac8
+109	5460	7849673550636494	CMakeFiles/demo.dir/classes/Chess.cpp.obj	9fdd6376d56b90bc
+49	5462	7849673550036454	CMakeFiles/demo.dir/Application.cpp.obj	efd0779db84ab9b
+5463	5908	7849673604171553	demo.exe	b3373267687d148
+52	5068	7849676881184932	CMakeFiles/demo.dir/classes/Chess.cpp.obj	9fdd6376d56b90bc
+5069	5496	7849676931355522	demo.exe	b3373267687d148
+31	1729	7849677644463506	CMakeFiles/demo.dir/classes/Chess.cpp.obj	9fdd6376d56b90bc
+59	337	7849677736152414	demo.exe	b3373267687d148
+23	1940	7849677865532817	CMakeFiles/demo.dir/classes/Chess.cpp.obj	9fdd6376d56b90bc
+32	308	7849677927986959	demo.exe	b3373267687d148

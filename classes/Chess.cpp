@@ -51,6 +51,7 @@ void Chess::setUpBoard()
     _grid->initializeChessSquares(pieceSize, "boardsquare.png");
     //FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
     FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    //FENtoBoard("r1bk3r/p2pBpNp/n4n2/1p1NP2P/6P1/3P4/P1P1K3/q5b1");
 
     startGame();
 }
@@ -58,7 +59,7 @@ void Chess::setUpBoard()
 void Chess::FENtoBoard(const std::string& fen) {
     // Current board position
     int x = 0;
-    int y = 0;
+    int y = 7;
 
     for (size_t i = 0; i < fen.length(); i++)
     {
@@ -72,7 +73,7 @@ void Chess::FENtoBoard(const std::string& fen) {
         
         if (c == '/') 
         {
-            y++;
+            y--;
             x = 0;
         }
         else if (ascii >= 49 && ascii <= 56) // 1 to 8
@@ -82,7 +83,7 @@ void Chess::FENtoBoard(const std::string& fen) {
         }
         else if (ascii >= 65 && ascii <= 90) // A to Z
         {
-            playerNumber = 1;
+            playerNumber = 0;
             switch (c)
             {
                 case 'R': pieceType = Rook; break;
@@ -95,7 +96,7 @@ void Chess::FENtoBoard(const std::string& fen) {
         }
         else if (ascii >= 97 && ascii <= 122) // a to z
         {
-            playerNumber = 0;
+            playerNumber = 1;
             switch (c)
             {
                 case 'r': pieceType = Rook; break;
@@ -181,7 +182,8 @@ std::string Chess::stateString()
             s += pieceNotation( x, y );
         }
     );
-    return s;}
+    return s;
+}
 
 void Chess::setStateString(const std::string &s)
 {
