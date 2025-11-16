@@ -159,13 +159,13 @@ void Game::findDropTarget(ImVec2 &pos)
 			if (_dropTarget && square != _dropTarget)
 			{
 				_dropTarget->willNotDropBit(_dragBit);
-				_dropTarget->setHighlighted(false);
+				//_dropTarget->setHighlighted(false);
 				_dropTarget = nullptr;
 			}
 			if (_oldHolder && square->canDropBitAtPoint(_dragBit, pos) && canBitMoveFromTo(*_dragBit, *_oldHolder, *square))
 			{
 				_dropTarget = square;
-				_dropTarget->setHighlighted(true);
+				//_dropTarget->setHighlighted(true);
 			}
 		}
 	});

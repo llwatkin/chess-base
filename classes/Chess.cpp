@@ -430,3 +430,13 @@ void Chess::setStateString(const std::string &s)
         }
     });
 }
+
+void Chess::clearBoardHighlights()
+{
+    _grid->forEachSquare(
+        [](ChessSquare* square, int x, int y) 
+        {
+            square->setHighlighted(false);
+        }
+    );
+}

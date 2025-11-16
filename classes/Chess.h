@@ -46,6 +46,8 @@ private:
     void generateKingMoves(std::vector<BitMove>& moves, Bitboard kingBoard, uint64_t emptySquares);
     std::vector<BitMove> generateMoves(char color);
 
+    void clearBoardHighlights();
+
     Grid* _grid;
     Bitboard _knightBitboards[64];
     Bitboard _kingBitboards[64];
