@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Game.h"
-#include "Grid.h"
+#include "Bitboard.h"
 
 #define WHITE 0
 #define BLACK 1
@@ -42,8 +42,11 @@ private:
     Bitboard generateKingMoveBitboard(int square);
     void addPawnBitboardMovesToList(std::vector<BitMove>& moves, const Bitboard bitboard, const int shift);
     void generatePawnMoves(std::vector<BitMove>& moves, Bitboard pawnBoard, Bitboard enemyPieces, Bitboard emptySquares, char color);
-    void generateKnightMoves(std::vector<BitMove>& moves, Bitboard knightBoard, uint64_t emptySquares);
-    void generateKingMoves(std::vector<BitMove>& moves, Bitboard kingBoard, uint64_t emptySquares);
+    void generateKnightMoves(std::vector<BitMove>& moves, Bitboard knightBoard, uint64_t movableSquares);
+    void generateKingMoves(std::vector<BitMove>& moves, Bitboard kingBoard, uint64_t movableSquares);
+    void generateRookMoves(std::vector<BitMove>& moves, Bitboard rookBoard, uint64_t occupiedSquares, uint64_t friendlySquares);
+    void generateBishopMoves(std::vector<BitMove>& moves, Bitboard bishopBoard, uint64_t occupiedSquares, uint64_t friendlySquares);
+    void generateQueenMoves(std::vector<BitMove>& moves, Bitboard queenBoard, uint64_t occupiedSquares, uint64_t friendlySquares);
     std::vector<BitMove> generateMoves(char color);
 
     void clearBoardHighlights();

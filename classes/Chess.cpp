@@ -1,5 +1,6 @@
 #include "Chess.h"
 #include "Logger.h"
+#include "MagicBitboards.h"
 #include <limits>
 #include <cmath>
 
@@ -8,11 +9,13 @@ Logger &logger = Logger::GetInstance();
 Chess::Chess()
 {
     _grid = new Grid(8, 8);
+    initMagicBitboards();
 }
 
 Chess::~Chess()
 {
     delete _grid;
+    cleanupMagicBitboards();
 }
 
 char Chess::pieceNotation(int x, int y) const
@@ -243,12 +246,12 @@ void Chess::generatePawnMoves(std::vector<BitMove>& moves, Bitboard pawnBoard, B
 //
 // Generates move objects for knights from a bitboard
 //
-void Chess::generateKnightMoves(std::vector<BitMove>& moves, Bitboard knightBoard, uint64_t emptySquares)
+void Chess::generateKnightMoves(std::vector<BitMove>& moves, Bitboard knightBoard, uint64_t movableSquares)
 {
     knightBoard.forEachBit(
         [&](int fromSquare) 
         {
-            Bitboard moveBitboard = Bitboard(_knightBitboards[fromSquare].getData() & emptySquares);
+            Bitboard moveBitboard = Bitboard(_knightBitboards[fromSquare].getData() & movableSquares);
             moveBitboard.forEachBit(
                 [&](int toSquare) 
                 { 
@@ -262,16 +265,64 @@ void Chess::generateKnightMoves(std::vector<BitMove>& moves, Bitboard knightBoar
 //
 // Generates move objects for kings from a bitboard
 //
-void Chess::generateKingMoves(std::vector<BitMove>& moves, Bitboard kingBoard, uint64_t emptySquares)
+void Chess::generateKingMoves(std::vector<BitMove>& moves, Bitboard kingBoard, uint64_t movableSquares)
 {
     kingBoard.forEachBit(
         [&](int fromSquare) 
         {
-            Bitboard moveBitboard = Bitboard(_kingBitboards[fromSquare].getData() & emptySquares);
+            Bitboard moveBitboard = Bitboard(_kingBitboards[fromSquare].getData() & movableSquares);
             moveBitboard.forEachBit(
                 [&](int toSquare) 
                 { 
                     moves.emplace_back(fromSquare, toSquare, King); 
+                }
+            ); 
+        }
+    );
+}
+
+void Chess::generateRookMoves(std::vector<BitMove>& moves, Bitboard rookBoard, uint64_t occupiedSquares, uint64_t friendlySquares)
+{
+    rookBoard.forEachBit(
+        [&](int fromSquare)
+        {
+            Bitboard moveBitboard = Bitboard(getRookAttacks(fromSquare, occupiedSquares) & friendlySquares);
+            moveBitboard.forEachBit(
+                [&](int toSquare) 
+                { 
+                    moves.emplace_back(fromSquare, toSquare, Rook); 
+                }
+            ); 
+        }
+    );
+}
+
+void Chess::generateBishopMoves(std::vector<BitMove>& moves, Bitboard bishopBoard, uint64_t occupiedSquares, uint64_t friendlySquares)
+{
+    bishopBoard.forEachBit(
+        [&](int fromSquare)
+        {
+            Bitboard moveBitboard = Bitboard(getBishopAttacks(fromSquare, occupiedSquares) & friendlySquares);
+            moveBitboard.forEachBit(
+                [&](int toSquare) 
+                { 
+                    moves.emplace_back(fromSquare, toSquare, Bishop); 
+                }
+            ); 
+        }
+    );
+}
+
+void Chess::generateQueenMoves(std::vector<BitMove>& moves, Bitboard queenBoard, uint64_t occupiedSquares, uint64_t friendlySquares)
+{
+    queenBoard.forEachBit(
+        [&](int fromSquare)
+        {
+            Bitboard moveBitboard = Bitboard(getQueenAttacks(fromSquare, occupiedSquares) & friendlySquares);
+            moveBitboard.forEachBit(
+                [&](int toSquare) 
+                { 
+                    moves.emplace_back(fromSquare, toSquare, Queen); 
                 }
             ); 
         }
@@ -290,11 +341,10 @@ std::vector<BitMove> Chess::generateMoves(char color)
     uint64_t myKnights = 0LL;
     uint64_t myPawns = 0LL;
     uint64_t myKing = 0LL;
-    uint64_t myOtherPieces = 0LL;
-    uint64_t enemyKnights = 0LL;
-    uint64_t enemyPawns = 0LL;
-    uint64_t enemyKing = 0LL;
-    uint64_t enemyOtherPieces = 0LL;
+    uint64_t myQueens = 0LL;
+    uint64_t myBishops = 0LL;
+    uint64_t myRooks = 0LL;
+    uint64_t occupiedByEnemy = 0LL;
 
     const char *myPieces = (color == WHITE) ? "PNBRQK" : "pnbrqk";
     const char *enemyPieces = (color == WHITE) ? "pnbrqk" : "PNBRQK";
@@ -303,23 +353,25 @@ std::vector<BitMove> Chess::generateMoves(char color)
     {
         if (gameState[i] == myPieces[0]) myPawns |= 1ULL << i;
         else if (gameState[i] == myPieces[1]) myKnights |= 1ULL << i;
-        else if (gameState[i] == myPieces[2]) myOtherPieces |= 1ULL << i;
-        else if (gameState[i] == myPieces[3]) myOtherPieces |= 1ULL << i;
-        else if (gameState[i] == myPieces[4]) myOtherPieces |= 1ULL << i;
+        else if (gameState[i] == myPieces[2]) myBishops |= 1ULL << i;
+        else if (gameState[i] == myPieces[3]) myRooks |= 1ULL << i;
+        else if (gameState[i] == myPieces[4]) myQueens |= 1ULL << i;
         else if (gameState[i] == myPieces[5]) myKing |= 1ULL << i;
-        else if (gameState[i] == enemyPieces[0]) enemyPawns |= 1ULL << i;
-        else if (gameState[i] == enemyPieces[1]) enemyKnights |= 1ULL << i;
-        else if (gameState[i] == enemyPieces[2]) enemyOtherPieces |= 1ULL << i;
-        else if (gameState[i] == enemyPieces[3]) enemyOtherPieces |= 1ULL << i;
-        else if (gameState[i] == enemyPieces[4]) enemyOtherPieces |= 1ULL << i;
-        else if (gameState[i] == enemyPieces[5]) enemyKing |= 1ULL << i;
+        else if (gameState[i] == enemyPieces[0]) occupiedByEnemy |= 1ULL << i;
+        else if (gameState[i] == enemyPieces[1]) occupiedByEnemy |= 1ULL << i;
+        else if (gameState[i] == enemyPieces[2]) occupiedByEnemy |= 1ULL << i;
+        else if (gameState[i] == enemyPieces[3]) occupiedByEnemy |= 1ULL << i;
+        else if (gameState[i] == enemyPieces[4]) occupiedByEnemy |= 1ULL << i;
+        else if (gameState[i] == enemyPieces[5]) occupiedByEnemy |= 1ULL << i;
     }
 
-    uint64_t occupiedByMe = myKnights | myPawns | myKing | myOtherPieces;
-    uint64_t occupiedByEnemy = enemyKnights | enemyPawns | enemyKing | enemyOtherPieces;
+    uint64_t occupiedByMe = myKnights | myPawns | myKing | myQueens | myBishops | myRooks;
     generateKnightMoves(moves, myKnights, ~occupiedByMe);
     generateKingMoves(moves, myKing, ~occupiedByMe);
     generatePawnMoves(moves, myPawns, occupiedByEnemy, ~occupiedByMe & ~occupiedByEnemy, color);
+    generateRookMoves(moves, myRooks, occupiedByMe | occupiedByEnemy, ~occupiedByMe);
+    generateBishopMoves(moves, myBishops, occupiedByMe | occupiedByEnemy, ~occupiedByMe);
+    generateQueenMoves(moves, myQueens, occupiedByMe | occupiedByEnemy, ~occupiedByMe);
 
     logger.Info("There are " + std::to_string(moves.size()) + " moves available for Player " + std::to_string(color));
     return moves;
