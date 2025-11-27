@@ -39,6 +39,7 @@ public:
     bool canBitMoveFromTo(Bit &bit, BitHolder &src, BitHolder &dst) override;
     bool actionForEmptyHolder(BitHolder &holder) override;
     void clearBoardHighlights() override;
+    void endTurn() override;
 
     void stopGame() override;
 

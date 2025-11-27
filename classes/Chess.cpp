@@ -298,7 +298,8 @@ std::vector<BitMove> Chess::generateMoves(const std::string& gameState, char col
     for (int i = 0; i < NUM_BITBOARDS; i++) _bitboards[i] = 0ULL;
     for (int i = 0; i < 64; i++)
     {
-        int bitboardIndex = _bitboardLookup[gameState[i]];
+        int pieceNotation = gameState[i];
+        int bitboardIndex = _bitboardLookup[pieceNotation];
         _bitboards[bitboardIndex] |= 1ULL << i;
     }
     
@@ -334,13 +335,14 @@ std::vector<BitMove> Chess::generateMoves(const std::string& gameState, char col
     generateRookMoves(moves, myRooks, occupiedByMe | occupiedByEnemy, ~occupiedByMe);
     generateQueenMoves(moves, myQueens, occupiedByMe | occupiedByEnemy, ~occupiedByMe);
     generateKingMoves(moves, myKing, ~occupiedByMe);
-    
+
     logger.Info("There are " + std::to_string(moves.size()) + " moves available for Player " + std::to_string(color));
     return moves;
 }
 
 bool Chess::actionForEmptyHolder(BitHolder &holder)
 {
+    // Can't place pieces in chess
     return false;
 }
 
@@ -411,8 +413,6 @@ Player* Chess::checkForWinner()
 
 bool Chess::checkForDraw()
 {
-    char nextColor = getCurrentPlayer()->playerNumber() == 0 ? WHITE : BLACK;
-    _moves = generateMoves(stateString(), nextColor);
     return false;
 }
 
@@ -453,4 +453,19 @@ void Chess::clearBoardHighlights()
             square->setHighlighted(false);
         }
     );
+}
+
+void Chess::endTurn()
+{
+	_gameOptions.currentTurnNo++;
+	Turn *turn = new Turn;
+	turn->_boardState = stateString();
+	turn->_date = (int)_gameOptions.currentTurnNo;
+	turn->_score = _gameOptions.score;
+	turn->_gameNumber = _gameOptions.gameNumber;
+	_turns.push_back(turn);
+
+    // Generate moves for next player
+	char nextColor = getCurrentPlayer()->playerNumber() == 0 ? WHITE : BLACK;
+    _moves = generateMoves(stateString(), nextColor);
 }
