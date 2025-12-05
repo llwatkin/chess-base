@@ -25,7 +25,7 @@
 
 
 const int AI_PLAYER = 1;
-const int HUMAN_PLAYER = -1;
+const int HUMAN_PLAYER = 0;
 
 class GameTable;
 
