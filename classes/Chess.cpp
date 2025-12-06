@@ -283,18 +283,23 @@ void Chess::updateAI()
 Player* Chess::checkForWinner()
 {
     // Generate moves for next player
-    _gameState.init(stateString().c_str(), getCurrentPlayer()->playerNumber());
+    int nextPlayer = getCurrentPlayer()->playerNumber();
+    int prevPlayer = nextPlayer == 0 ? 1 : 0;
+    _gameState.init(stateString().c_str(), nextPlayer);
     _moves = _gameState.generateAllMoves();
 
-    // TODO
-
+    // If the next player cannot move out of check, the previous player wins!
+    if (_moves.size() == 0)
+    {
+        logger.Event("Player " + std::to_string(nextPlayer) + " cannot make any legal moves. Player " + std::to_string(prevPlayer) + " wins!");
+        return getPlayerAt(prevPlayer);
+    }
     return nullptr;
 }
 
 bool Chess::checkForDraw()
 {
-    // Check whether the next player has any valid moves
-    // Check whether there is sufficient material for a checkmate
+    // TODO: Check whether there is sufficient material for a checkmate
     return false;
 }
 
