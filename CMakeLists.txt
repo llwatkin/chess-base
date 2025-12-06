@@ -67,7 +67,6 @@ add_executable(demo Application.cpp
                           classes/Chess.cpp
                           classes/Logger.cpp
                           classes/GameState.cpp
-                          classes/ChessEvaluation.cpp
                           ${BCKD_FILE}
                           ${MAIN_FILE}
                           ${IMPL_FILE}

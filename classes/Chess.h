@@ -2,7 +2,6 @@
 
 #include "Game.h"
 #include "GameState.h"
-#include "ChessEvaluation.h"
 
 constexpr int pieceSize = 80;
 

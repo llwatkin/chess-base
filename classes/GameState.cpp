@@ -340,7 +340,7 @@ void GameState::filterOutIllegalMoves(std::vector<BitMove>& moves) {
 	}), moves.end());
 }
 
-std::vector<BitMove> GameState::generateAllMoves()
+std::vector<BitMove> GameState::generateAllMoves(bool areNegamaxMoves)
 {
     std::vector<BitMove> moves;
     moves.reserve(32);
@@ -376,9 +376,12 @@ std::vector<BitMove> GameState::generateAllMoves()
     
     filterOutIllegalMoves(moves);
 
-    Logger &logger = Logger::GetInstance();
-    logger.Info("There are " + std::to_string(moves.size()) + " moves for player " + std::to_string(color));
-
+    if (!areNegamaxMoves)
+    {
+        Logger &logger = Logger::GetInstance();
+        logger.Info("There are " + std::to_string(moves.size()) + " moves for player " + std::to_string(color));
+    }
+    
     return moves;
 }
 

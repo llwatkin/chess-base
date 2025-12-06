@@ -397,15 +397,6 @@ build CMakeFiles/demo.dir/classes/GameState.cpp.obj: CXX_COMPILER__demo_unscanne
   TARGET_COMPILE_PDB = CMakeFiles\demo.dir\
   TARGET_PDB = demo.pdb
 
-build CMakeFiles/demo.dir/classes/ChessEvaluation.cpp.obj: CXX_COMPILER__demo_unscanned_Debug C$:/Users/lynlo/Desktop/CMPM$ 123/chess-base/classes/ChessEvaluation.cpp || cmake_object_order_depends_target_demo
-  CONFIG = Debug
-  DEP_FILE = CMakeFiles\demo.dir\classes\ChessEvaluation.cpp.obj.d
-  FLAGS = -Wall -Wextra -Wno-unused-parameter -Wno-ignored-qualifiers -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20
-  OBJECT_DIR = CMakeFiles\demo.dir
-  OBJECT_FILE_DIR = CMakeFiles\demo.dir\classes
-  TARGET_COMPILE_PDB = CMakeFiles\demo.dir\
-  TARGET_PDB = demo.pdb
-
 build CMakeFiles/demo.dir/imgui/imgui_impl_dx11.cpp.obj: CXX_COMPILER__demo_unscanned_Debug C$:/Users/lynlo/Desktop/CMPM$ 123/chess-base/imgui/imgui_impl_dx11.cpp || cmake_object_order_depends_target_demo
   CONFIG = Debug
   DEP_FILE = CMakeFiles\demo.dir\imgui\imgui_impl_dx11.cpp.obj.d
@@ -441,7 +432,7 @@ build CMakeFiles/demo.dir/imgui/imgui_impl_win32.cpp.obj: CXX_COMPILER__demo_uns
 #############################################
 # Link the executable demo.exe
 
-build demo.exe: CXX_EXECUTABLE_LINKER__demo_Debug CMakeFiles/demo.dir/Application.cpp.obj CMakeFiles/demo.dir/imgui/imgui_demo.cpp.obj CMakeFiles/demo.dir/imgui/imgui_draw.cpp.obj CMakeFiles/demo.dir/imgui/imgui_tables.cpp.obj CMakeFiles/demo.dir/imgui/imgui_widgets.cpp.obj CMakeFiles/demo.dir/imgui/imgui.cpp.obj CMakeFiles/demo.dir/classes/Bit.cpp.obj CMakeFiles/demo.dir/classes/BitHolder.cpp.obj CMakeFiles/demo.dir/classes/Game.cpp.obj CMakeFiles/demo.dir/classes/Sprite.cpp.obj CMakeFiles/demo.dir/classes/Square.cpp.obj CMakeFiles/demo.dir/classes/ChessSquare.cpp.obj CMakeFiles/demo.dir/classes/Grid.cpp.obj CMakeFiles/demo.dir/classes/TicTacToe.cpp.obj CMakeFiles/demo.dir/classes/Checkers.cpp.obj CMakeFiles/demo.dir/classes/Othello.cpp.obj CMakeFiles/demo.dir/classes/Connect4.cpp.obj CMakeFiles/demo.dir/classes/Chess.cpp.obj CMakeFiles/demo.dir/classes/Logger.cpp.obj CMakeFiles/demo.dir/classes/GameState.cpp.obj CMakeFiles/demo.dir/classes/ChessEvaluation.cpp.obj CMakeFiles/demo.dir/imgui/imgui_impl_dx11.cpp.obj CMakeFiles/demo.dir/main_win32.cpp.obj CMakeFiles/demo.dir/imgui/imgui_impl_win32.cpp.obj
+build demo.exe: CXX_EXECUTABLE_LINKER__demo_Debug CMakeFiles/demo.dir/Application.cpp.obj CMakeFiles/demo.dir/imgui/imgui_demo.cpp.obj CMakeFiles/demo.dir/imgui/imgui_draw.cpp.obj CMakeFiles/demo.dir/imgui/imgui_tables.cpp.obj CMakeFiles/demo.dir/imgui/imgui_widgets.cpp.obj CMakeFiles/demo.dir/imgui/imgui.cpp.obj CMakeFiles/demo.dir/classes/Bit.cpp.obj CMakeFiles/demo.dir/classes/BitHolder.cpp.obj CMakeFiles/demo.dir/classes/Game.cpp.obj CMakeFiles/demo.dir/classes/Sprite.cpp.obj CMakeFiles/demo.dir/classes/Square.cpp.obj CMakeFiles/demo.dir/classes/ChessSquare.cpp.obj CMakeFiles/demo.dir/classes/Grid.cpp.obj CMakeFiles/demo.dir/classes/TicTacToe.cpp.obj CMakeFiles/demo.dir/classes/Checkers.cpp.obj CMakeFiles/demo.dir/classes/Othello.cpp.obj CMakeFiles/demo.dir/classes/Connect4.cpp.obj CMakeFiles/demo.dir/classes/Chess.cpp.obj CMakeFiles/demo.dir/classes/Logger.cpp.obj CMakeFiles/demo.dir/classes/GameState.cpp.obj CMakeFiles/demo.dir/imgui/imgui_impl_dx11.cpp.obj CMakeFiles/demo.dir/main_win32.cpp.obj CMakeFiles/demo.dir/imgui/imgui_impl_win32.cpp.obj
   CONFIG = Debug
   FLAGS = -Wall -Wextra -Wno-unused-parameter -Wno-ignored-qualifiers -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd
   LINK_FLAGS = -Xlinker /subsystem:console -fuse-ld=lld-link

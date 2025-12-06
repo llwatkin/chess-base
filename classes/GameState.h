@@ -129,7 +129,7 @@ public:
         static_cast<GameStateData&>(*this) = stateStack[--stackPtr];
     }
 
-    std::vector<BitMove> generateAllMoves();
+    std::vector<BitMove> generateAllMoves(bool areNegamaxMoves);
     void shutdown();
 private:
     const BitBoard generatePawnAttacks(const BitBoard pawns, char color);

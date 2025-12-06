@@ -1,5 +1,6 @@
 #include "Chess.h"
 #include "Logger.h"
+#include "EvaluationData.h"
 #include <limits>
 #include <cmath>
 #include <chrono>
@@ -47,7 +48,7 @@ Bit* Chess::PieceForPlayer(const int playerNumber, ChessPiece piece)
 void Chess::setUpBoard()
 {
     setNumberOfPlayers(2);
-    //if (gameHasAI()) setAIPlayer(AI_PLAYER);
+    if (gameHasAI()) setAIPlayer(AI_PLAYER);
 
     _gameOptions.rowX = 8;
     _gameOptions.rowY = 8;
@@ -58,7 +59,7 @@ void Chess::setUpBoard()
     //FENtoBoard("r1bk3r/p2pBpNp/n4n2/1p1NP2P/6P1/3P4/P1P1K3/q5b1");
     
     _gameState.init(stateString().c_str(), WHITE);
-    _moves = _gameState.generateAllMoves();
+    _moves = _gameState.generateAllMoves(false);
 
     startGame();
 }
@@ -213,10 +214,9 @@ int Chess::evaluateGameState(const GameState& gameState)
     int evaluation = 0;
     for (int square = 0; square < 64; square++)
     {
-        // TODO
-        //const unsigned char piece = (gameState.state[square]);
-        //evaluation += evaluateScores[piece]; 
-        //evaluation += pieceSquareTables[piece][square];
+        const unsigned char piece = (gameState.state[square]);
+        evaluation += evaluateScores[piece]; 
+        evaluation += pieceSquareTables[piece][square];
     }
     if (gameState.color == AI_PLAYER) evaluation *= -1; // ???
     return evaluation;
@@ -227,7 +227,9 @@ int Chess::negamax(GameState& gameState, int depth, int alpha, int beta)
     _moveCount++;
     if (depth == 0) return evaluateGameState(gameState);
 
-    auto newMoves = gameState.generateAllMoves();
+    auto newMoves = gameState.generateAllMoves(true);
+    if (newMoves.size() == 0) return evaluateGameState(gameState);
+
     int bestEvaluation = -1000;
     for (const auto & move : newMoves)
     {
@@ -275,7 +277,7 @@ void Chess::updateAI()
         Bit* bit = src.bit();
         dst.dropBitAtPoint(bit, ImVec2(0, 0));
         src.setBit(nullptr);
-        //bitMovedFromTo(*bit, src, dst); Not sure what this is for yet
+        bitMovedFromTo(*bit, src, dst);
     }
 }
 
@@ -286,7 +288,7 @@ Player* Chess::checkForWinner()
     int nextPlayer = getCurrentPlayer()->playerNumber();
     int prevPlayer = nextPlayer == 0 ? 1 : 0;
     _gameState.init(stateString().c_str(), nextPlayer);
-    _moves = _gameState.generateAllMoves();
+    _moves = _gameState.generateAllMoves(false);
 
     // If the next player cannot move out of check, the previous player wins!
     if (_moves.size() == 0)

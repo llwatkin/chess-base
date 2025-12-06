@@ -121,12 +121,6 @@
 },
 {
   "directory": "C:/Users/lynlo/Desktop/CMPM 123/chess-base/build",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE  -Wall -Wextra -Wno-unused-parameter -Wno-ignored-qualifiers -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o CMakeFiles\\demo.dir\\classes\\ChessEvaluation.cpp.obj -c \"C:\\Users\\lynlo\\Desktop\\CMPM 123\\chess-base\\classes\\ChessEvaluation.cpp\"",
-  "file": "C:/Users/lynlo/Desktop/CMPM 123/chess-base/classes/ChessEvaluation.cpp",
-  "output": "C:/Users/lynlo/Desktop/CMPM 123/chess-base/build/CMakeFiles/demo.dir/classes/ChessEvaluation.cpp.obj"
-},
-{
-  "directory": "C:/Users/lynlo/Desktop/CMPM 123/chess-base/build",
   "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE  -Wall -Wextra -Wno-unused-parameter -Wno-ignored-qualifiers -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++20 -o CMakeFiles\\demo.dir\\imgui\\imgui_impl_dx11.cpp.obj -c \"C:\\Users\\lynlo\\Desktop\\CMPM 123\\chess-base\\imgui\\imgui_impl_dx11.cpp\"",
   "file": "C:/Users/lynlo/Desktop/CMPM 123/chess-base/imgui/imgui_impl_dx11.cpp",
   "output": "C:/Users/lynlo/Desktop/CMPM 123/chess-base/build/CMakeFiles/demo.dir/imgui/imgui_impl_dx11.cpp.obj"
