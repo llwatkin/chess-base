@@ -54,8 +54,8 @@ void Chess::setUpBoard()
     _gameOptions.rowY = 8;
 
     _grid->initializeChessSquares(pieceSize, "boardsquare.png");
-    //FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
-    FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+    //FENtoBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     //FENtoBoard("r1bk3r/p2pBpNp/n4n2/1p1NP2P/6P1/3P4/P1P1K3/q5b1");
     
     _gameState.init(stateString().c_str(), WHITE);
@@ -218,7 +218,7 @@ int Chess::evaluateGameState(const GameState& gameState)
         evaluation += evaluateScores[piece]; 
         evaluation += pieceSquareTables[piece][square];
     }
-    if (gameState.color == AI_PLAYER) evaluation *= -1; // ???
+    if (gameState.color == BLACK) evaluation *= -1; // ???
     return evaluation;
 }
 
@@ -253,7 +253,7 @@ void Chess::updateAI()
     for (const auto & move : _moves)
     {
         _gameState.pushMove(move);
-        int moveEvaluation = -negamax(_gameState, 3, -1000, 1000);
+        int moveEvaluation = -negamax(_gameState, 4, -1000, 1000);
         _gameState.popState();
 
         // If this current move is better than the best move, update!
