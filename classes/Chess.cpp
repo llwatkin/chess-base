@@ -162,7 +162,7 @@ bool Chess::canBitMoveFrom(Bit &bit, BitHolder &src)
         {
             logger.Error("No source square found");
         }
-        if (!isPossibleMove) logger.Info("There are no possible moves for this piece");
+        if (!isPossibleMove) logger.Warn("There are no possible moves for this piece");
         return isPossibleMove;
     }
     else
